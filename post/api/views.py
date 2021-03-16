@@ -6,6 +6,7 @@ from post.api.paginations import PostPagination
 from post.api.permissions import IsOwner
 from post.api.serializers import PostSerialiers
 from post.models import Post
+from rest_framework.mixins import DestroyModelMixin
 
 
 
@@ -21,17 +22,15 @@ class PostDetailAPIView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerialiers
     lookup_field = "slug"
-class PostDeleteAPIView(DestroyAPIView):
+
+class PostUpdatelAPIView(RetrieveUpdateAPIView,DestroyModelMixin):
     queryset = Post.objects.all()
     serializer_class = PostSerialiers
     lookup_field = "slug"
     permission_classes = [IsOwner]
 
-class PostUpdatelAPIView(RetrieveUpdateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerialiers
-    lookup_field = "slug"
-    permission_classes = [IsOwner]
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
     def perform_update(self, serializer):
         serializer.save(modified_by=self.request.user)
