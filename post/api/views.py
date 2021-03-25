@@ -16,6 +16,7 @@ class PostListAPIView(ListAPIView):
     search_fields=["title","content"]
     filter_backends = [SearchFilter,OrderingFilter]
     pagination_class = PostPagination
+    throttle_scope = 'uploads'
 
 
 class PostDetailAPIView(RetrieveAPIView):

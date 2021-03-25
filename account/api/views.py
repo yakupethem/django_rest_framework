@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from account.api.serializers import UserSerializer, ChangePasswordSerializer,RegisterSerializer
 from account.api.permissions import Notauthendicated
+from account.api.throttles import RegisterThrottle
 
 
 class ProfileView(RetrieveUpdateAPIView):
@@ -31,12 +32,8 @@ class UpdatePasswor(APIView):
 
     def put(self,request,*args,**kwargs):
         self.object=self.request.user
-        data={
-            "old_password":request.data["old_password"],
-            "new_password": request.data["new_password"]
-        }
 
-        serializer=ChangePasswordSerializer(data=data)
+        serializer=ChangePasswordSerializer(data=request.data)
 
         if serializer.is_valid():
             old_password=serializer.data.get("old_password")
@@ -54,3 +51,4 @@ class CreateUserViev(CreateAPIView):
     model=User.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = (Notauthendicated,)
+    throttle_classes = (RegisterThrottle,)

@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
-    note=models.CharField(max_length=200)
+    note=models.CharField(max_length=200,blank=True)
     twitter=models.CharField(max_length=50,blank=True)
 
     def __str__(self):
