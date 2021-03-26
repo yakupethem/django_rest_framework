@@ -4,12 +4,13 @@ from comment.api.paginations import CommentPagination
 from comment.api.permissions import IsOwner
 from comment.api.serializers import CreateCommentSerializers,CommentListSerializer,CommenUpdateDeleteSerializer
 from comment.models import Comment
-
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.mixins import DestroyModelMixin
 
 class CreateCommentAPIView(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CreateCommentSerializers
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
