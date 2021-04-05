@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1","52.59.251.153"]
+ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1","52.59.251.153","64.227.112.30"]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
